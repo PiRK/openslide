@@ -1,5 +1,5 @@
 import os
-from setuptools import setup, Extension, Feature
+from setuptools import setup, Extension
 
 # Load version string
 _verfile = os.path.join(os.path.dirname(__file__), 'openslide', '_version.py')
@@ -9,21 +9,14 @@ with open(_verfile) as _fh:
 with open('README.rst') as _fh:
     _long_description = _fh.read()
 
+
+
 setup(
     name='openslide-python',
     version=__version__,
-    packages=[
-        'openslide',
-    ],
-    features={
-        'performance': Feature(
-            'performance-enhancing extension module',
-            standard=True,
-            ext_modules=[
-                Extension('openslide._convert', ['openslide/_convert.c']),
-            ],
-        ),
-    },
+    packages=['openslide',],
+    ext_modules=[Extension('openslide._convert',
+                           [os.path.join('openslide', '_convert.c')])],
     test_suite='tests',
     maintainer='OpenSlide project',
     maintainer_email='openslide-users@lists.andrew.cmu.edu',
@@ -52,5 +45,4 @@ setup(
     install_requires=[
         'Pillow',
     ],
-    zip_safe=True,
-)
+    zip_safe=True,)
